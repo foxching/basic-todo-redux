@@ -35,28 +35,40 @@ class TodoInput extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
-     const newTodo = {
-        ...this.state.todo,
-        id: uuid()
+    const newTodo = {
+      ...this.state.todo,
+      id: uuid()
     }
+
+
 
     if (this.state.todo.id) {
       this.props.updateTodo(this.state.todo)
+      this.setState({
+        text: 'Saved'
+      })
     } else {
-      this.props.addTodo(newTodo)
+      if (newTodo.title.length === 0) {
+        alert('please enter a value')
+      } else {
+        this.props.addTodo(newTodo)
+      }
+
     }
 
     this.setState({
-      todo: emptyTodo,
-      text:'Saved'
+      todo: {
+        title: ''
+      }
+
     })
 
   }
 
   renderClass = () => {
-    return this.state.text === 'Saved' 
-       ? 'btn btn-success btn-block' 
-       : 'btn  btn-warning btn-block'
+    return this.state.text === 'Saved'
+      ? 'btn btn-success btn-block'
+      : 'btn  btn-warning btn-block'
   }
 
 
